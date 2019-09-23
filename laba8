@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include<string.h>
+#define MAXLINE 1000
+int prv(char mass[], int begin, int end);
+main()
+{
+int wlen,N;
+char str[MAXLINE];
+int l,F,i,pos,k=0,F1=0;
+printf("write a string:\n");
+memset(str,'\0',MAXLINE);
+gets(str);
+for (l=0; *(str+l) !='\0';l++);
+F=0;
+for(i = 0; i <= l; i++)
+{
+if(*(str+i)==' '|| *(str+i)=='.' || *(str+i)==',' || *(str+i)=='\t' || *(str+i)=='\n' || i==l)
+{
+if (F == 1)
+{
+wlen=i-pos;
+if(prv(str,pos,i)==0)
+{
+for(k=0 ; k < wlen ; k++)
+F1= (*(str+pos+k)!=*(str+i-k-1)) ? 1 : F1;
+if(F1==0)
+{
+for(k=pos; k <= l; k++)*(str+k)=*(str+k+wlen);
+i-=wlen;
+l-=wlen;
+}
+}
+}
+F = F1 = 0;
+}
+else if (F==0)
+{
+F = 1;
+pos=i;
+}
+}
+puts(str);
+return 0;
+}
+int prv(char str[], int begin, int end)
+{
+int F,i;
+F=0;
+for (i=begin; i < end; i++)
+{
+if ((*(str+i)<'A' ||*(str+i)>'Z') && (*(str+i)<'a' || *(str+i)>'z'))
+F=1;
+}
+return F;
+}
+
